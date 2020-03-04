@@ -12,9 +12,10 @@ fs.readdir(`${__dirname}/modules`, (err, files) => {
         const module = require(`${__dirname}/modules/${name}`);
 
         logger.info(`Loading "${name}" module routes`);
-
+        
         if (module && module.routes) {
             // Loads each module routes
+           
             for (const route of module.routes) {
                 // "handlers" will be an array of functions (middlewares and controllers)
                 const handlers = [];
