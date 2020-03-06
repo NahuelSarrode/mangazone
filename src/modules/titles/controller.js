@@ -4,6 +4,23 @@ const logger = require('../../common/logger');
 const genreService = require('../../modules/genres/service'); 
 const mangaService = require('../../modules/mangas/service'); 
 
+exports.getById = async (req, res) => {
+    try {
+        const title = await titleService.getById({
+            title_id: req.params.title_id
+        });
+
+        if (!title) {
+            res.sendStatus(http.status.BAD_REQUEST);
+        }
+    
+        res.send(title);
+    } catch (error) {
+        logger.error('Error getting title: ', error);
+        res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+    }
+};
+
 exports.getAll = async (req, res) => {
     try {
         const titles = await titleService.getAll();
@@ -17,23 +34,30 @@ exports.getAll = async (req, res) => {
 
 exports.addTitle = async (req, res) => {
     try {
-        const genre = await genreService.getById(req.body.genre_id);
-        const manga = await mangaService.getById(req.body.manga_id) 
+        const genre = await genreService.getById({
+            genre_id: req.body.genre_id
+        });
+        const manga = await mangaService.getById({
+            manga_id: req.body.manga_id
+        }) 
 
         if (!genre && !manga) {
             res.sendStatus(http.status.BAD_REQUEST);
         }
         
-        const title = {
+        const title = await titleService.addTitle({
+            name: req.body.name,
             sinopsis: req.body.sinopsis,
-            genre: req.body.genre, 
-            emition: req.body.emition, 
+            genre_id: req.body.genre_id, 
             manga_id: req.body.manga_id, 
-            date: req.body.date, 
-            name: req.body.name 
-        }
-
-        res.send(title); 
+            emition: req.body.emition,
+            date: req.body.date
+        });        
+        
+        res.send({
+            title,
+            ...req.body
+        });
     } catch (error) {
         logger.error('Error adding title', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR); 
