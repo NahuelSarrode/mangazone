@@ -4,7 +4,6 @@ const logger = require('../../common/logger');
 
 exports.getById = async(params) => {
     try {
-        console.log(params);
         const query = squel.select()
             .from('title')
             .field('id')
@@ -54,7 +53,6 @@ exports.getAll = async () => {
 
 exports.addTitle = async (params) => {
     try {
-        console.log(params);
         const query = squel.insert()
             .into('title')
             .set('name', params.name)
@@ -73,3 +71,26 @@ exports.addTitle = async (params) => {
         throw error; 
     }
 };
+
+exports.editTitle = async (params) => {
+    try {
+        console.log(params);
+        const query = squel.update()
+            .table('title')
+            .set('name', params.name)
+            .set('sinopsis', params.sinopsis)
+            .set('genre_id', params.genre_id)
+            .set('manga_id', params.manga_id)
+            .set('emition', params.emition)
+            .set('date', params.date)
+            .where('id = ?', params.title_id);
+
+        const prepareQuery = query.toParam();
+        const [ row ] = await pool.query(prepareQuery.text, prepareQuery.values);
+
+        return row;
+    } catch (error) {
+        logger.error('Cant execute query: ', error);
+        throw error; 
+    }
+};  

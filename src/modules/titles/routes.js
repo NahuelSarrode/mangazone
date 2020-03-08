@@ -14,4 +14,9 @@ module.exports = [{
     method: http.verbs.GET,
     path: '/titles/:title_id',
     handler: 'getById'
+}, 
+{
+    method: http.verbs.PUT,
+    path: '/titles/:title_id', 
+    handler: 'editTitle'
 }];

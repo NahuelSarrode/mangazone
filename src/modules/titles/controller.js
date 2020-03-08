@@ -62,4 +62,29 @@ exports.addTitle = async (req, res) => {
         logger.error('Error adding title', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR); 
     }
-}
+};
+
+exports.editTitle = async (req, res) => {
+    try {
+        const title = await titleService.getById({
+            title_id: req.params.title_id
+        });
+    
+        await titleService.editTitle({
+            title_id: title[0].id,
+            name: req.body.name, 
+            sinopsis: req.body.sinopsis, 
+            genre_id: req.body.genre, 
+            manga_id: req.body.manga, 
+            emition: req.body.emition,
+            date: req.body.date
+        });
+    
+        res.send({
+            ...req.body
+        });        
+    } catch (error) {
+        logger.error('Error editing title', error);
+        res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+    }
+};
