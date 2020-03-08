@@ -19,4 +19,9 @@ module.exports = [{
     method: http.verbs.PUT,
     path: '/titles/:title_id', 
     handler: 'editTitle'
+},
+{
+    method: http.verbs.DELETE,
+    path: '/titles/:title_id',
+    handler: 'deleteTitle'
 }];

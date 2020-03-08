@@ -22,7 +22,7 @@ exports.getById = async(params) => {
             return null;
         }
         
-        return rows;
+        return rows[0];
     } catch (error) {
         logger.error('Cant execute query error: ', error);
         throw error; 
@@ -74,7 +74,6 @@ exports.addTitle = async (params) => {
 
 exports.editTitle = async (params) => {
     try {
-        console.log(params);
         const query = squel.update()
             .table('title')
             .set('name', params.name)
@@ -94,3 +93,19 @@ exports.editTitle = async (params) => {
         throw error; 
     }
 };  
+
+exports.deleteTitle = async (params) => {
+    try {
+        const query = squel.delete()
+            .from('title')
+            .where('id = ?', params.title_id)
+        
+        const prepareQuery = query.toParam();
+        const deleted = await pool.query(prepareQuery.text, prepareQuery.values);
+
+        console.log(deleted);
+    } catch (error) {
+        logger.error('Cant execute query', error);
+        throw error;
+    }
+};

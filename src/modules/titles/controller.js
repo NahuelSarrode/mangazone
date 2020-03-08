@@ -69,9 +69,12 @@ exports.editTitle = async (req, res) => {
         const title = await titleService.getById({
             title_id: req.params.title_id
         });
-    
+
+        if (!title) {
+            res.sendStatus(http.status.BAD_REQUEST);
+        }    
         await titleService.editTitle({
-            title_id: title[0].id,
+            title_id: title.id,
             name: req.body.name, 
             sinopsis: req.body.sinopsis, 
             genre_id: req.body.genre, 
@@ -85,6 +88,27 @@ exports.editTitle = async (req, res) => {
         });        
     } catch (error) {
         logger.error('Error editing title', error);
+        res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+    }
+};
+
+exports.deleteTitle = async (req, res) => {
+    try {
+        const title = await titleService.getById({
+            title_id: req.params.title_id
+        }); 
+
+        if (!title) {
+            res.sendStatus(http.status.BAD_REQUEST);
+        }
+    
+        await titleService.deleteTitle({
+            title_id: title.id
+        });
+
+        res.sendStatus(http.status.OK);        
+    } catch (error) {
+        logger.error('Error deleting title', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
     }
 };
