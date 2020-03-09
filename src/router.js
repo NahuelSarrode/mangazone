@@ -1,7 +1,7 @@
 const fs = require('fs');
 const router = require('express').Router();
 const logger = require('./common/logger');
-//const middlewares = require('./common/middlewares');
+const middlewares = require('./common/middlewares');
 
 logger.info('Initializing Router');
 
@@ -25,13 +25,13 @@ fs.readdir(`${__dirname}/modules`, (err, files) => {
                     logger.warn(`Attempting to add controller "${route.handler}" to path "${route.path}" but doesn't exist`);
                 } else {
                     // If the route has middlewares configured, we add this middlewares to the "handlers" array
-                    /* if (route.middlewares && route.middlewares.length) {
+                    if (route.middlewares && route.middlewares.length) {
 
                         for (const middleware of route.middlewares) {
                             logger.debug(`Added middleware "${middleware}" to path "${route.path}"`);
                             handlers.push(middlewares[middleware]);
                         }
-                    } */
+                    }
 
                     // Finally, the last handler item need to be the controller
                     logger.debug(`Added controller "${route.handler}" to path "${route.path}"`);

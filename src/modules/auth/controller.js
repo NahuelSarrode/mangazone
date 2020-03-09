@@ -18,7 +18,6 @@ exports.login = async (req, res) => {
         const token = await authService.createToken(user);
 
         res.send(token);
-
     } catch (error) {
         logger.error('Error loggin', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);

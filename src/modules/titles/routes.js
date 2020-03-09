@@ -3,7 +3,8 @@ const http = require('../../constants/http');
 module.exports = [{
     method: http.verbs.GET, 
     path: '/titles', 
-    handler: 'getAll'
+    handler: 'getAll',
+    middlewares: ['auth', 'isAdmin']    
 },
 {
     method: http.verbs.POST,
