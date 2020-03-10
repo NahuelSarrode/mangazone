@@ -10,8 +10,7 @@ exports.login = async (req, res) => {
             password: req.body.password
         });
 
-        if (!user || user.password != req.body.password) {
-            logger.error('Check your credentials ', error);
+        if (!user || user.password != req.body.password) {  
             res.sendStatus(http.status.BAD_REQUEST);
         }
 

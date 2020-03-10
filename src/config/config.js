@@ -7,7 +7,7 @@ module.exports = {
         host: 'localhost',
         user: 'root',
         database: 'mangazone_db',
-        password: 'voldemort1',
+        password: 'Voldemort1@',
     },
     email: {
         host: 'smtp.mailtrap.io',

@@ -1,18 +1,27 @@
-const http = require('../../constants/http'); 
-const logger = require('../logger');
+const jsonwebtoken = require('jsonwebtoken');
+const config = require('../../config/config');
+const http = require('../../constants/http');
+const logger = require('../logger'); 
 
 module.exports = async (req, res, next) => {
     try {
-        const user = req.user; 
+        const auth = req.get('Authorization'); 
 
-        if (user.role !== 'Admin') {
+        if (!auth || !auth.length) {
             return res.sendStatus(http.status.UNAUTHORIZED);
         }
+
+        const user = jsonwebtoken.verify(auth, config.secret);
+
+        if (!user) {
+            return res.sendStatus(http.status.UNAUTHORIZED);
+        }
+
+        req.user = user.data; 
         
-        console.log(user);
-        return next(); 
+        return next();
     } catch (error) {
-        logger.error('The user must be an Administrator', error);
-        res.sendStatus(http.status.UNAUTHORIZED);        
+        logger.warn('Cant verify your credentials ', error);
+        res.sendStatus(http.status.UNAUTHORIZED);
     }
 };

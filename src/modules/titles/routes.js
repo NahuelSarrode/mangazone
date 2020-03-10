@@ -4,7 +4,7 @@ module.exports = [{
     method: http.verbs.GET, 
     path: '/titles', 
     handler: 'getAll',
-    middlewares: ['auth', 'isAdmin']    
+    middlewares: ['auth','isAdmin']    
 },
 {
     method: http.verbs.POST,

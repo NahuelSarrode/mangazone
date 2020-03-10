@@ -4,6 +4,7 @@ const logger = require('../../common/logger');
 
 exports.createToken = async (params) => {
     try {
+        console.log(params);
         if (params.password) {
             delete params.password;
         }        
