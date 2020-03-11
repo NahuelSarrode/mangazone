@@ -118,16 +118,24 @@ exports.editUser = async (params) => {
             .set('role_id', params.role_id)
 
         const prepareQuery = query.toParam();
-        const [ rows ] = await pool.query(prepareQuery.text, prepareQuery.values);
-
-        if (!rows || !rows.length) {
-            return null;
-        }
-        console.log('into service');
-        console.log(rows);
-        return rows;        
+        const [ row ] = await pool.query(prepareQuery.text, prepareQuery.values);       
     } catch (error) {
         logger.error('Cant execute query ', error);
         throw error; 
+    }
+};
+
+exports.deleteUser = async (params) => {
+    try {
+        const query = squel.delete()
+            .from('user')
+            .where('id = ?', params.user_id)
+            
+        const prepareQuery = query.toParam();
+        const [ rows ] = await pool.query(prepareQuery.text, prepareQuery.values);
+
+    } catch (error) {
+        logger.error('Cant execute query ', error);
+        throw error;
     }
 };

@@ -39,7 +39,11 @@ exports.addUser = async (req, res) => {
             password: req.body.password,
             role_id: req.body.role_id 
         });
-        
+
+        if (!user) {
+            res.sendStatus(http.status.BAD_REQUEST);
+        }
+
         res.sendStatus(http.status.OK);
     } catch (error) {
         logger.error('Error making user ', error);
@@ -53,24 +57,46 @@ exports.editUser = async (req, res) => {
         const user = await userService.getById({
             user_id: req.params.user_id
         });
-        console.log(user);
-        const edited = await userService.editUser({
-            user_id: user.id,
-            name: user.name,
-            username: user.username,
-            email: user.email,
-            password: user.password,
-            role_id: req.body.role_id
-        });
-        console.log('into controller');
-        console.log(req.params.user_id);
-        if (!edited) {
+
+        if (!user) {
             res.sendStatus(http.status.BAD_REQUEST);
         }
+        
+        await userService.editUser({
+            user_id: user.id,
+            name: req.body.name,
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+            role_id: req.body.role_id
+        });
 
-        return edited;
+        res.send({
+            ...req.body
+        });
     } catch (error) {
         logger.error('Error editing the user ', error);
+        res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+    }
+};
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const user = await userService.getById({
+            user_id: req.params.user_id
+        });
+    
+        if (!user) {
+            res.sendStatus(http.status.BAD_REQUEST);
+        }
+    
+        await userService.deleteUser({
+            user_id: user.id
+        });
+
+        res.sendStatus(http.status.OK);
+    } catch (error) {
+        logger.error('Error deleting user ', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
     }
 };
