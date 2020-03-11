@@ -53,3 +53,81 @@ exports.checkCredentials = async (params) => {
         throw error;
     }
 };
+
+exports.addUser = async (params) => {
+    try {
+        console.log('en el service');
+        const query = squel.insert()
+            .into('user')
+            .set('name', params.name)
+            .set('username', params.username)
+            .set('email', params.email)
+            .set('password', params.password)
+            .set('role_id', params.role_id)
+
+        const prepareQuery = query.toParam();
+        const [ rows ] = await pool.query(prepareQuery.text, prepareQuery.values);
+
+        if (!rows || !rows.length) {
+            return null; 
+        }
+
+        return rows.insertId;
+    } catch (error) {
+        logger.error('Cant execute query ', error);
+        throw error;
+    }
+};
+
+exports.getById = async (params) => {
+    try {
+        const query = squel.select()
+            .field('u.id')
+            .field('u.name')
+            .field('u.username')
+            .field('u.email')
+            .field('u.password')
+            .field('r.name', 'role')
+            .from('user', 'u')
+            .where('u.id = ?', params.user_id)
+            .left_join('role', 'r', 'u.role_id = r.id')
+
+        const prepareQuery = query.toParam();
+        const [ rows ] = await pool.query(prepareQuery.text, prepareQuery.values);
+
+        if (!rows || !rows.length) {
+            return null;
+        }
+
+        return rows[0];
+    } catch (error) {
+        logger.error('Cant execute query ', error);
+        throw error;
+    }
+};
+
+exports.editUser = async (params) => {
+    try {
+        const query = squel.update()
+            .table('user')
+            .where('id = ?', params.user_id)
+            .set('name', params.name)
+            .set('username', params.username)
+            .set('email', params.email)
+            .set('password', params.password)
+            .set('role_id', params.role_id)
+
+        const prepareQuery = query.toParam();
+        const [ rows ] = await pool.query(prepareQuery.text, prepareQuery.values);
+
+        if (!rows || !rows.length) {
+            return null;
+        }
+        console.log('into service');
+        console.log(rows);
+        return rows;        
+    } catch (error) {
+        logger.error('Cant execute query ', error);
+        throw error; 
+    }
+};
