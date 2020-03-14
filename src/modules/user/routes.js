@@ -4,29 +4,29 @@ module.exports = [{
     method: http.verbs.GET, 
     path: '/users/',
     handler: 'getAll',
-    middlewares: ['isAdmin']
+    middlewares: ['auth', 'isAdmin']
 },
 {
     method: http.verbs.POST,
     path: '/users/add/',
     handler: 'addUser',
-    middlewares: ['isAdmin']
+    middlewares: ['auth', 'isAdmin']
 },
 {
     method: http.verbs.GET,
     path: '/users/:user_id',
     handler: 'getById',
-    middlewares: ['isAdmin']
+    middlewares: ['auth','isAdmin']
 },
 {
     method: http.verbs.PUT,
     path: '/users/edit/:user_id',
     handler: 'editUser',
-    middlewares: ['isAdmin']
+    middlewares: ['auth','isAdmin']
 },
 {
     method: http.verbs.DELETE,
     path: '/users/delete/:user_id', 
     handler: 'deleteUser',
-    middlewares: ['isAdmin']
+    middlewares: ['auth', 'isAdmin']
 }]

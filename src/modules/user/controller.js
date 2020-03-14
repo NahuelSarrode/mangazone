@@ -53,7 +53,6 @@ exports.addUser = async (req, res) => {
 
 exports.editUser = async (req, res) => {
     try { 
-
         const user = await userService.getById({
             user_id: req.params.user_id
         });
