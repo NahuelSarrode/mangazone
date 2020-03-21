@@ -56,7 +56,6 @@ exports.checkCredentials = async (params) => {
 
 exports.addUser = async (params) => {
     try {
-        console.log('en el service');
         const query = squel.insert()
             .into('user')
             .set('name', params.name)
