@@ -89,8 +89,9 @@ exports.editOva = async (params) => {
     }
 };
 
-exports.deleteOva = async (parmas) => {
+exports.deleteOva = async (params) => {
     try {
+        console.log('into service');
         const query = squel.delete()
             .from('ova')
             .where('id = ?', params.ova_id) 

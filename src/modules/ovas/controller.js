@@ -82,17 +82,20 @@ exports.editOva = async (req, res) => {
 
 exports.deleteOva = async (req, res) => {
     try {
+        console.log('into controller');
         const ova = await ovaService.getById({
             ova_id: req.params.ova_id
         });
-    
+            
         if (!ova) {
             res.sendStatus(http.status.BAD_REQUEST);
         }
-    
-        await ovaService.editOva({
+        console.log(ova);
+        await ovaService.deleteOva({
             ova_id: req.params.ova_id,
         });
+
+        res.sendStatus(http.status.OK);
     } catch (error) {
         logger.error('Error deleting ova', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);

@@ -21,7 +21,7 @@ module.exports = [{
     handler: 'editOva'
 },
 {
-    mathod: http.verbs.DELETE,
+    method: http.verbs.DELETE,
     path: '/ovas/delete/:ova_id',
-    handler: 'deleteOVa'
+    handler: 'deleteOva'
 }]
