@@ -15,3 +15,7 @@ exports.getById = async (req, res) => {
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);         
     }
 }
+
+exports.getAll = async (req, res) => {
+ 
+};
