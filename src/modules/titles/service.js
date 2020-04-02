@@ -85,9 +85,13 @@ exports.editTitle = async (params) => {
             .where('id = ?', params.title_id);
 
         const prepareQuery = query.toParam();
-        const [ row ] = await pool.query(prepareQuery.text, prepareQuery.values);
+        const [ updated ] = await pool.query(prepareQuery.text, prepareQuery.values);
 
-        return row;
+        if (updated.affectedRows <= 0) {
+            return null;
+        }
+        
+        return updated;
     } catch (error) {
         logger.error('Cant execute query: ', error);
         throw error; 
@@ -103,7 +107,11 @@ exports.deleteTitle = async (params) => {
         const prepareQuery = query.toParam();
         const deleted = await pool.query(prepareQuery.text, prepareQuery.values);
 
-        console.log(deleted);
+        if (deleted.affectedRows <= 0) {
+            return null;
+        }
+        
+        return deleted;
     } catch (error) {
         logger.error('Cant execute query', error);
         throw error;

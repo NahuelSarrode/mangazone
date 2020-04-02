@@ -2,27 +2,31 @@ const http = require('../../constants/http');
 
 module.exports = [{
     method: http.verbs.GET, 
-    path: '/titles', 
+    path: '/titles/', 
     handler: 'getAll',
-    middlewares: ['auth','isAdmin']    
+    middlewares: ['auth']    
 },
 {
     method: http.verbs.POST,
-    path: '/title',
-    handler: 'addTitle'
+    path: '/title/',
+    handler: 'addTitle',
+    middlewares: ['auth', 'isAdmin']
 }, 
 {
     method: http.verbs.GET,
     path: '/titles/:title_id',
-    handler: 'getById'
+    handler: 'getById',
+    middlewares: ['auth', 'isAdmin']
 }, 
 {
     method: http.verbs.PUT,
     path: '/titles/:title_id', 
-    handler: 'editTitle'
+    handler: 'editTitle',
+    middlewares: ['auth', 'isAdmin']
 },
 {
     method: http.verbs.DELETE,
     path: '/titles/:title_id',
-    handler: 'deleteTitle'
+    handler: 'deleteTitle',
+    middlewares: ['auth', 'isAdmin']
 }];

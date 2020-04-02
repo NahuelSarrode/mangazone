@@ -64,7 +64,7 @@ exports.getById = async (params) => {
             return null;
         }
 
-        return row;
+        return row[0];
     } catch (error) {
         logger.error('Cant execute query ', error);
         throw error;
@@ -82,7 +82,13 @@ exports.editOva = async (params) => {
             .set('title_id', params.title_id)
 
         const prepareQuery = query.toParam();
-        await pool.query(prepareQuery.text, prepareQuery.values);
+        const [updated] = await pool.query(prepareQuery.text, prepareQuery.values);
+
+        if (updated.affectedRows <= 0) {
+            return null;
+        }
+        
+        return updated;
     } catch (error) {
         logger.error('Cant excute query ', error);
         throw error;
@@ -97,7 +103,13 @@ exports.deleteOva = async (params) => {
             .where('id = ?', params.ova_id) 
 
         const prepareQuery = query.toParam();
-        await pool.query(prepareQuery.text, prepareQuery.values);
+        const [ deleted ] = await pool.query(prepareQuery.text, prepareQuery.values); 
+
+        if (deleted.affectedRows <= 0) {
+            return null;
+        }
+        
+        return deleted;
     } catch (error) {
         logger.error('Cant excute query ', error);
         throw error;

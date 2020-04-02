@@ -63,17 +63,19 @@ exports.editOva = async (req, res) => {
             ova_id: req.params.ova_id
         });
 
-        await ovaService.editOva({
+        const updated = await ovaService.editOva({
             ova_id: req.params.ova_id,
             name: req.body.name,
             date: req.body.date,
             duration: req.body.duration,
             title_id: req.body.title_id
         });
-        
-        res.send({
-            ...req.body
-        })
+
+        if (!updated) {
+            res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+        }
+
+        res.sendStatus(http.status.NO_CONTENT);
     } catch (error) {
         logger.error('Error deleting ova', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
@@ -90,11 +92,15 @@ exports.deleteOva = async (req, res) => {
             res.sendStatus(http.status.BAD_REQUEST);
         }
         
-        await ovaService.deleteOva({
+        const deleted = await ovaService.deleteOva({
             ova_id: req.params.ova_id,
         });
 
-        res.sendStatus(http.status.OK);
+        if (!deleted) {
+            res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+        }
+
+        res.sendStatus(http.status.NO_CONTENT);
     } catch (error) {
         logger.error('Error deleting ova', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);

@@ -51,9 +51,10 @@ exports.getByNumber = async (params) => {
             return null;
         }
 
-        return row;
+        return row[0];
     } catch (error) {
-        
+        logger.error('Cant execute query ', error);
+        throw error;
     }
 };  
 
@@ -95,9 +96,13 @@ exports.editEpisode = async (params) => {
             .where('number = ?', params.episode_number)
 
         const prepareQuery = query.toParam();
-        const [ row ] = await pool.query(prepareQuery.text, prepareQuery.values);
+        const [ updated ] = await pool.query(prepareQuery.text, prepareQuery.values);
 
-        return row;
+        if (updated.affectedRows <= 0) {
+            return null;
+        }
+        
+        return updated;
     } catch (error) {
         logger.error('Cant execute query ', error);
         throw error;
@@ -112,7 +117,13 @@ exports.deleteEpisode = async (params) => {
             .where('title_id = ?', params.title_id)
         
         const prepareQuery = query.toParam();
-        await pool.query(prepareQuery.text, prepareQuery.values);
+        const [deleted] = await pool.query(prepareQuery.text, prepareQuery.values);
+
+        if (deleted.affectedRows <= 0) {
+            return null;
+        }
+        
+        return deleted;
     } catch (error) {
         logger.error('Cant execute query ', error);
         throw error; 

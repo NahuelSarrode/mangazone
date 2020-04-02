@@ -82,7 +82,7 @@ exports.updateManga = async (req, res) => {
             res.sendStatus(http.status.BAD_REQUEST);
         }
  
-        await mangaService.updateManga({
+        const updated = await mangaService.updateManga({
             manga_id: manga.id,
             name: req.body.name,
             language: req.body.language,
@@ -91,11 +91,14 @@ exports.updateManga = async (req, res) => {
             title_id: req.body.title_id
         });
 
-        res.send({
-            ...req.body
-        });
+        if (!updated) {
+            res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+        }
+
+        res.sendStatus(http.status.NO_CONTENT);
     } catch (error) {
-        
+        logger.error('Error updating manga ', error);
+        res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
     }
 }
 
@@ -113,12 +116,16 @@ exports.deleteManga = async (req, res) => {
             res.sendStatus(http.status.BAD_REQUEST);
         }
     
-        await mangaService.deleteManga({
+        const deleted = await mangaService.deleteManga({
             manga_id: manga.id,
             title_id: title.id
         });
 
-        res.sendStatus(http.status.OK);
+        if (!deleted) {
+            res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+        }
+
+        res.sendStatus(http.status.NO_CONTENT);
     } catch (error) {
         logger.error('Error deleting Manga ', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);

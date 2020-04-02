@@ -105,7 +105,11 @@ exports.editEpisode = async (req, res) => {
             episode_number: req.params.episode_number
         });
         
-        res.sendStatus(http.status.OK);
+        if (!updated) {
+            res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+        }
+
+        res.sendStatus(http.status.NO_CONTENT);
     } catch (error) {
         logger.error('Error editing the episode ', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
@@ -122,14 +126,18 @@ exports.deleteEpisode = async (req, res) => {
             res.sendStatus(http.status.BAD_REQUEST);
         }
 
-        await episodeService.deleteEpisode({
+        const deleted = await episodeService.deleteEpisode({
             episode_number: req.params.episode_number,
             title_id: req.params.title_id
         });
 
-        res.sendStatus(http.status.OK);
+        if (!deleted) {
+            res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+        }
+
+        res.sendStatus(http.status.NO_CONTENT);
     } catch (error) {
-        logger.error('Error deleting episode');
+        logger.error('Error deleting episode', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
     }
 };

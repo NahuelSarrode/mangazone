@@ -117,7 +117,13 @@ exports.editUser = async (params) => {
             .set('role_id', params.role_id)
 
         const prepareQuery = query.toParam();
-        const [ row ] = await pool.query(prepareQuery.text, prepareQuery.values);       
+        const [ updated ] = await pool.query(prepareQuery.text, prepareQuery.values);  
+        
+        if (updated.affectedRows <= 0) {
+            return null;
+        }
+        
+        return updated;
     } catch (error) {
         logger.error('Cant execute query ', error);
         throw error; 
@@ -131,8 +137,13 @@ exports.deleteUser = async (params) => {
             .where('id = ?', params.user_id)
             
         const prepareQuery = query.toParam();
-        const [ rows ] = await pool.query(prepareQuery.text, prepareQuery.values);
+        const [ deleted ] = await pool.query(prepareQuery.text, prepareQuery.values);
 
+        if (deleted.affectedRows <= 0) {
+            return null;
+        }
+        
+        return deleted;
     } catch (error) {
         logger.error('Cant execute query ', error);
         throw error;

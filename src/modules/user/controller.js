@@ -61,7 +61,7 @@ exports.editUser = async (req, res) => {
             res.sendStatus(http.status.BAD_REQUEST);
         }
         
-        await userService.editUser({
+        const updated = await userService.editUser({
             user_id: user.id,
             name: req.body.name,
             username: req.body.username,
@@ -70,9 +70,11 @@ exports.editUser = async (req, res) => {
             role_id: req.body.role_id
         });
 
-        res.send({
-            ...req.body
-        });
+        if (!updated) {
+            res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+        }
+
+        res.sendStatus(http.status.NO_CONTENT);
     } catch (error) {
         logger.error('Error editing the user ', error);
         res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
@@ -89,9 +91,13 @@ exports.deleteUser = async (req, res) => {
             res.sendStatus(http.status.BAD_REQUEST);
         }
     
-        await userService.deleteUser({
+        const deleted = await userService.deleteUser({
             user_id: user.id
         });
+
+        if (!deleted) {
+            res.sendStatus(http.status.INTERNAL_SERVER_ERROR);
+        }
 
         res.sendStatus(http.status.OK);
     } catch (error) {
