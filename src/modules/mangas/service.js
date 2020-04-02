@@ -117,7 +117,7 @@ exports.updateManga = async (params) => {
             .set('date', params.date)
             .set('title_id', params.title_id)
             .where('id = ?', params.manga_id)
-// verificar title_id ya que estoy usando dos veces el mismo valor y no se como lo interpreta. 
+
         const prepareQuery = query.toParam();
         await pool.query(prepareQuery.text, prepareQuery.values);
     } catch (error) {

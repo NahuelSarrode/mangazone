@@ -81,8 +81,7 @@ exports.updateManga = async (req, res) => {
         if (!title || !manga) {
             res.sendStatus(http.status.BAD_REQUEST);
         }
-        // TODO invertigar sobre el retorno de update and delete on squel, si esto
-        // no se encuentra validado siempre da ok aunque no haga el update realmente.   
+ 
         await mangaService.updateManga({
             manga_id: manga.id,
             name: req.body.name,
