@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f27fbf78-c43e-4ef4-a19f-f94707c658fc",
+		"_postman_id": "06947208-6751-4ba4-aa30-22c6ce04716e",
 		"name": "mangazone",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -10,18 +10,43 @@
 			"item": [
 				{
 					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoyLCJuYW1lIjoiQW5kcmVhTG91Ym9uIiwidXNlcm5hbWUiOiJuYWh1ZWwiLCJlbWFpbCI6Im5haHVlbHNhcnJvZGVAZ21haWwuY29tIiwicm9sZSI6IkFkbWluIn0sImlhdCI6MTU4NDIyNjQ1NiwiZXhwIjoxNTg0MjY5NjU2fQ.NjH4qrjSEN_uvtQHHldoS6SaTAAEdkbXwSIcVPTherE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3000/titles",
+							"raw": "http://localhost:3000/titles/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"titles"
+								"titles",
+								""
 							]
 						}
 					},
@@ -49,14 +74,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/title",
+							"raw": "http://localhost:3000/title/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"title"
+								"title",
+								""
 							]
 						}
 					},
@@ -122,8 +148,10 @@
 							],
 							"variable": [
 								{
+									"id": "fc45a64a-e15e-49be-8414-555abaf30712",
 									"key": "title_id",
-									"value": "1"
+									"value": "1",
+									"type": "string"
 								}
 							]
 						}
@@ -168,7 +196,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/mangas/:id",
+							"raw": "http://localhost:3000/mangas/:manga_id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -176,13 +204,168 @@
 							"port": "3000",
 							"path": [
 								"mangas",
-								":id"
+								":manga_id"
 							],
 							"variable": [
 								{
-									"key": "id",
-									"value": "1",
-									"type": "string"
+									"key": "manga_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/mangas/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mangas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/mangas/:manga_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mangas",
+								":manga_name"
+							],
+							"variable": [
+								{
+									"key": "manga_name",
+									"value": "One Piece"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addManga",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Blitch\",\n\t\"language\": \"JAP\", \n\t\"state_id\": 1, \n\t\"date\": \"1995-12-12\",\n\t\"title_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/mangas/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"mangas",
+								""
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteManga",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/mangas/:manga_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"mangas",
+								":manga_name"
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "2"
+								},
+								{
+									"key": "manga_name",
+									"value": "Blitch"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateManga",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Mugiwara no luffy\", \n\t\"language\": \"Jap\",\n\t\"state_id\": 1, \n\t\"date\": \"2020-03-31\",\n\t\"title_id\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/mangas/:manga_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"mangas",
+								":manga_name"
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "2"
+								},
+								{
+									"key": "manga_name",
+									"value": "One Piece"
 								}
 							]
 						}
@@ -214,8 +397,117 @@
 							"variable": [
 								{
 									"key": "genre_id",
-									"value": "1",
-									"type": "string"
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/genres/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"genres",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addGenre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Comedy\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/genres/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"genres",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateGenre",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"tuvieja\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/genres/:genre_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"genres",
+								":genre_id"
+							],
+							"variable": [
+								{
+									"key": "genre_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteGenre",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/genres/:genre_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"genres",
+								":genre_id"
+							],
+							"variable": [
+								{
+									"key": "genre_id",
+									"value": "6"
 								}
 							]
 						}
@@ -229,10 +521,52 @@
 			"name": "users",
 			"item": [
 				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Dario Sarrode\",\n\t\"username\": \"darito el renegado\",\n\t\"email\": \"dariosarrode@gmail.com\",\n\t\"password\": \"querty1234\", \n\t\"role_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "getAll",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoyLCJuYW1lIjoiQW5kcmVhTG91Ym9uIiwidXNlcm5hbWUiOiJuYWh1ZWwiLCJlbWFpbCI6Im5haHVlbHNhcnJvZGVAZ21haWwuY29tIiwicm9sZSI6IkFkbWluIn0sImlhdCI6MTU4NDIyNjAwNiwiZXhwIjoxNTg0MjY5MjA2fQ.H6ebfqAscUSQqva0LE2jqqGUTwXLMLNiqtLcdmCPSaE",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:3000/users/",
 							"protocol": "http",
@@ -249,10 +583,48 @@
 					"response": []
 				},
 				{
-					"name": "login",
+					"name": "getById",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoyLCJuYW1lIjoiQW5kcmVhTG91Ym9uIiwidXNlcm5hbWUiOiJuYWh1ZWwiLCJlbWFpbCI6Im5haHVlbHNhcnJvZGVAZ21haWwuY29tIiwicm9sZSI6IkFkbWluIn0sImlhdCI6MTU4NDIyNjQ1NiwiZXhwIjoxNTg0MjY5NjU2fQ.NjH4qrjSEN_uvtQHHldoS6SaTAAEdkbXwSIcVPTherE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editUser",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoyLCJuYW1lIjoiQW5kcmVhTG91Ym9uIiwidXNlcm5hbWUiOiJuYWh1ZWwiLCJlbWFpbCI6Im5haHVlbHNhcnJvZGVAZ21haWwuY29tIiwicm9sZSI6IkFkbWluIn0sImlhdCI6MTU4NDIyNjQ1NiwiZXhwIjoxNTg0MjY5NjU2fQ.NjH4qrjSEN_uvtQHHldoS6SaTAAEdkbXwSIcVPTherE",
+								"type": "text"
+							},
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
@@ -262,7 +634,113 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"nahuelsarrode@gmail.com\",\n\t\"password\": \"qdeqerty\"\n}",
+							"raw": "{\n\t\"name\": \"test1\",\n\t\"username\": \"test1\", \n\t\"email\": \"test1@gmail.com\",\n\t\"password\": \"test1\", \n\t\"role_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/edit/:user_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"edit",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "3",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoyLCJuYW1lIjoiQW5kcmVhTG91Ym9uIiwidXNlcm5hbWUiOiJuYWh1ZWwiLCJlbWFpbCI6Im5haHVlbHNhcnJvZGVAZ21haWwuY29tIiwicm9sZSI6IkFkbWluIn0sImlhdCI6MTU4NDIyNjQ1NiwiZXhwIjoxNTg0MjY5NjU2fQ.NjH4qrjSEN_uvtQHHldoS6SaTAAEdkbXwSIcVPTherE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users/delete/:user_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"delete",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "9",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d6919c99-d2bb-4dd4-99d6-b8a8d045624a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "503fb105-421c-44e5-8346-8b32549ff11d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"dariosarrode@gmail.com\",\n\t\"password\": \"querty1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -279,6 +757,613 @@
 							"path": [
 								"auth",
 								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ovas",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/ovas/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ovas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addOva",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Naruto-Shippuden\",\n\t\"date\": \"1990-01-01\",\n\t\"duration\": 60, \n\t\"title_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/ovas/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ovas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/ovas/:ova_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ovas",
+								":ova_id"
+							],
+							"variable": [
+								{
+									"key": "ova_id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editOVa",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"el viaje de chihiro\",\n\t\"date\": \"1995-12-12\",\n\t\"duration\": 60,\n\t\"title_id\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/ovas/edit/:ova_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ovas",
+								"edit",
+								":ova_id"
+							],
+							"variable": [
+								{
+									"key": "ova_id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteOva",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/ovas/delete/:ova_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ovas",
+								"delete",
+								":ova_id"
+							],
+							"variable": [
+								{
+									"key": "ova_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "episodes",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/episodes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"episodes",
+								""
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addEpisode",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"number\": 123,\n\t\"duration\": 25,\n\t\"state\": true, \n\t\"date\": \"2020-12-12\",\n\t\"description\": \"this is a description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/episodes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"episodes"
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByNumber",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/episodes/:episode_number",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"episodes",
+								":episode_number"
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "1"
+								},
+								{
+									"key": "episode_number",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editEpisode",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"number\": 1,\n\t\"duration\": 60,\n\t\"state\": false, \n\t\"date\": \"1990-01-01\",\n\t\"description\": \"updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/episodes/edit/:episode_number",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"episodes",
+								"edit",
+								":episode_number"
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "1"
+								},
+								{
+									"key": "episode_number",
+									"value": "124"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteEpisode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "movies",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/movies/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"movies",
+								""
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addMovie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Naruto Shippuden 2\",\n\t\"date\": \"2000-03-03\",\n\t\"duration\": \"50:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/movies/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"movies",
+								""
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/movies/:movie_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"movies",
+								":movie_name"
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "1"
+								},
+								{
+									"key": "movie_name",
+									"value": "Naruto Shippuden 2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editMovie",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Naruto Shippuden 3\",\n\t\"date\": \"2050-01-01\",\n\t\"duration\": \"10:00:00\",\n\t\"title_id\": 1 \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/movies/:movie_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"movies",
+								":movie_name"
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "1"
+								},
+								{
+									"key": "movie_name",
+									"value": "Naruto Shippuden 2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMovie",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/titles/:title_id/movies/:movie_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"titles",
+								":title_id",
+								"movies",
+								":movie_name"
+							],
+							"variable": [
+								{
+									"key": "title_id",
+									"value": "1"
+								},
+								{
+									"key": "movie_name",
+									"value": "Dragon ball La batalla de los dioses"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "states",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/states/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"states",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addState",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"suspendido\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/states/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"states",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteState",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/states/:state_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"states",
+								":state_id"
+							],
+							"variable": [
+								{
+									"key": "state_id",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editState",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"undefined\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/states/:state_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"states",
+								":state_id"
+							],
+							"variable": [
+								{
+									"key": "state_id",
+									"value": "10"
+								}
 							]
 						}
 					},
